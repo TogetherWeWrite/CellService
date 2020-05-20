@@ -30,7 +30,7 @@ namespace CellService
 
             #region database injection 
             services.Configure<CellServiceDatastoreSettings>(
-               Configuration.GetSection("AuthenticatieStoreSettings"));
+               Configuration.GetSection("CellstoreDatabaseSettings"));
 
             services.AddSingleton<ICellServiceDataStoreSettings>(sp =>
                 sp.GetRequiredService<IOptions<CellServiceDatastoreSettings>>().Value);
