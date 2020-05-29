@@ -35,8 +35,8 @@ namespace CellService
             services.Configure<MessageQueueSettings>(Configuration.GetSection("MessageQueueSettings"));
             services.AddMessagePublisher(Configuration["MessageQueueSettings:Uri"]);
             services.AddMessageConsumer(Configuration["MessageQueueSettings:Uri"],
-                "authentication-service",
-                builder => builder.WithHandler<WorldMessageHandler>("register-new-user"));
+                "cell-service",
+                builder => builder.WithHandler<WorldMessageHandler>("new-world"));
             #endregion
 
             #region database injection 

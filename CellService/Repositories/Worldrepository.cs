@@ -38,15 +38,15 @@ namespace CellService.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> EditRightsWorld(Guid id, EditRight obj)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> DeleteWorld(Guid id)
         {
             await _worlds.DeleteOneAsync(world => world.Id == id);
             return true;
+        }
+
+        public async Task<World> GetWorldWithCells(Guid id)
+        {
+            return await _worlds.Find(world => world.Id == id).FirstOrDefaultAsync();
         }
     }
 }

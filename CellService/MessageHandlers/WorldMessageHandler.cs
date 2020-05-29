@@ -6,21 +6,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CellService.Services;
+using Microsoft.VisualStudio.Web.CodeGeneration.Utils.Messaging;
 
 namespace CellService.MessageHandlers
 {
     public class WorldMessageHandler : IMessageHandler<WorldRegisterMessage>
     {
-        private IWorldRepository _worldRepository;
+        private IWorldEditService _worldEditService;
 
-        public WorldMessageHandler(IWorldRepository worldRepository)
+        public WorldMessageHandler(IWorldEditService worldEditService)
         {
-            _worldRepository = worldRepository;
+            _worldEditService = worldEditService;
         }
 
         public Task HandleMessageAsync(string messageType, WorldRegisterMessage sendable)
         {
-
+            _worldEditService.createWorld(sendable.Id, sendable.Title);
             return Task.CompletedTask;
         }
 
