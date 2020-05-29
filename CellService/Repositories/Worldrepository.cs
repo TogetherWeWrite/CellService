@@ -20,26 +20,8 @@ namespace CellService.Repositories
             _worlds = database.GetCollection<World>(settings.CollectionName);
         }
 
-        public async Task<bool> InitiliazeWorld(Guid Id, string Title)
+        public async Task<bool> InitiliazeWorld(World world)
         {
-            var world = new World
-            {
-                Id = Id,
-                Title = Title,
-                Cells = new List<List<Cell>>()
-                { new List<Cell>()
-                    {
-                        new Cell
-                        {
-                            CellName = "Je Eerste Cell! [1,1]",
-                            Color = "#55ff55",
-                            InnerCells = null,
-                            AttachedPages = new List<Page>(),
-                            Id = new Guid()
-                        }
-                    }
-                } //[1,1] initialize
-            };
             await _worlds.InsertOneAsync(world);
             return true;
         }

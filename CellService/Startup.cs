@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CellService.MessageHandlers;
+using CellService.Repositories;
+using CellService.Services;
 using CellService.Settings;
+using MessageBroker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +31,13 @@ namespace CellService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region mq
+            services.Configure<MessageQueueSettings>(Configuration.GetSection("MessageQueueSettings"));
+            services.AddMessagePublisher(Configuration["MessageQueueSettings:Uri"]);
+            services.AddMessageConsumer(Configuration["MessageQueueSettings:Uri"],
+                "authentication-service",
+                builder => builder.WithHandler<WorldMessageHandler>("register-new-user"));
+            #endregion
 
             #region database injection 
             services.Configure<CellServiceDatastoreSettings>(
@@ -34,6 +45,16 @@ namespace CellService
 
             services.AddSingleton<ICellServiceDataStoreSettings>(sp =>
                 sp.GetRequiredService<IOptions<CellServiceDatastoreSettings>>().Value);
+            #endregion
+
+            #region Services injection
+            services.AddTransient<IWorldEditService, WorldEditService>();
+            services.AddTransient<IWorldViewService, WorldViewService>();
+            #endregion
+
+            #region Repositories Injection
+            services.AddTransient<IWorldRepository, Worldrepository>();
+            services.AddTransient<ICellRepository, CellRepository>();
             #endregion
             services.AddControllers();
 

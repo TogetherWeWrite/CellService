@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cell-service
+  namespace: production
+  labels:
+    app: cell-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cell-service
+  template:
+    metadata:
+      labels:
+        app: cell-service
+    spec:
+      containers:
+        - image: bstijnb/cell-service
+          imagePullPolicy: IfNotPresent
+          name: wereld-service
+          ports: 
+            - containerPort: 80

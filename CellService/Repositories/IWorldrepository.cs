@@ -2,11 +2,13 @@ using CellService.Models;
 using System;
 using System.Threading.Tasks;
 using Exceptions;
+using CellService.Entities;
+
 namespace CellService.Repositories
 {
     public interface IWorldRepository //Repository used for editing world information. This will be called by the message queue.
     {
-        public Task<bool> InitiliazeWorld(Guid Id, string Title); //Method used for initializing a new World, with cells 
+        public Task<bool> InitiliazeWorld(World world); //Method used for initializing a new World, with cells 
         
         public Task<bool> EditRightsWorld(Guid id, EditRight obj); //Method used for editing the rights of a world
 

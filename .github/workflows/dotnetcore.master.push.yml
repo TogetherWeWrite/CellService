@@ -1,72 +1,96 @@
-name: .NET Core push on master branch
-
+name: master push
 on:
   push:
     branches: [master]
 
 jobs:
   build:
-    # The virtual machine that will be used on GitHub
+    name: build and test on ubuntu-18.04
     runs-on: ubuntu-18.04
-    
-    # Run the steps in a Docker container on the virtual machine
     container:
       image: mcr.microsoft.com/dotnet/core/sdk:3.1.201-bionic
     steps:
-      # Checkout Git repository
       - uses: actions/checkout@v2
-
-      # Install the dependencies needed for the project
       - name: Install dependencies
         run: dotnet restore
-      
-      # Build the project
+
+      - name: Decrypt the GPG encrypted config files
+        run: gpg --quiet --batch --yes --passphrase="${{ secrets.GPG_SECRET }}" --output ./CellService/appsettings.json --decrypt ./CellService/appsettings.json.gpg
+
       - name: Build
         run: dotnet build
       
-      # Test the project
       - name: Test
         run: dotnet test
       
-      # Publish the release build in the /release folder
       - name: Publish
-        run: dotnet publish -c Release -o release
+        run: dotnet publish -c Release -o out
       
-      # Upload the release folder and Dockerfile artifacts to this GitHub workflow for use in the next job
       - name: Upload release artifact
         uses: actions/upload-artifact@v1
         with:
           name: release-artifact
-          path: ./release
+          path: ./out
+      
       - name: Upload Dockerfile artifact
         uses: actions/upload-artifact@v1
         with:
           name: dockerfile-artifact
           path: ./Dockerfile
-  
-  deliver:
+      
+      - name: Upload Kubernetes artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: kubernetes-artifact
+          path: ./kube
+
+  delivery:
     needs: build
     runs-on: ubuntu-18.04
     steps:
-      # Download artifacts from GitHub workflow to use in this job
       - name: Download release artifact
         uses: actions/download-artifact@v1
         with:
           name: release-artifact
-          path: ./release
+          path: .
       - name: Download Dockerfile artifact
         uses: actions/download-artifact@v1
         with:
           name: dockerfile-artifact
           path: .
-      
-      # Deliver Docker image to DockerHub
       - name: Deliver Docker image
         env:
           CONTAINER_IMAGE: ${{ secrets.DOCKER_USER }}/${{ secrets.REPOSITORY_NAME }}:${{ github.sha }}
-          CONTAINER_IMAGE_LATEST: ${{ secrets.DOCKER_USER }}/${{ secrets.REPOSITORY_NAME }}:latest
+          CONTAINER_IMAGE_LATEST: ${{ secrets.DOCKER_USER }}/${{ secrets.REPOSITORY_NAME }}:master
         run: |
           docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
           docker build -t $CONTAINER_IMAGE -t $CONTAINER_IMAGE_LATEST .
           docker push $CONTAINER_IMAGE
           docker push $CONTAINER_IMAGE_LATEST
+
+  deploy:
+    needs: delivery
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Download kubernetes artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: kubernetes-artifact
+          path: ./kube
+
+      - uses: Azure/setup-kubectl@v1
+
+      - uses: Azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+      - uses: Azure/k8s-deploy@v1
+        with:
+          namespace: production
+          manifests: |
+            ./kube/deployment.yaml
+            ./kube/ingress.yaml
+            ./kube/service.yaml
+          images: |
+            ${{ secrets.DOCKER_USER }}/${{ secrets.REPOSITORY_NAME }}:${{ github.sha }}
