@@ -20,7 +20,7 @@ namespace CellService.Repositories
             _worlds = database.GetCollection<World>(settings.CollectionName);
         }
 
-        public async Task<bool> InitiliazeWorld(World world)
+        public async Task<bool> CreateWorld(World world)
         {
             await _worlds.InsertOneAsync(world);
             return true;

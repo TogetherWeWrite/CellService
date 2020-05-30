@@ -1,4 +1,5 @@
 ﻿using CellService.Entities;
+using CellService.Helpers;
 using CellService.Repositories;
 using System;
 using System.Collections.Generic;
@@ -10,32 +11,33 @@ namespace CellService.Services
     public class WorldEditService : IWorldEditService
     {
         private readonly IWorldRepository _worldRepository;
-        public WorldEditService(IWorldRepository worldRepository)
+        private readonly IChunkRepository _chunkRepository;
+        private readonly IChunkHelper _chunkHelper;
+        public WorldEditService(IWorldRepository worldRepository, IChunkHelper chunkHelper, IChunkRepository chunkRepository)
         {
+            this._chunkHelper = chunkHelper;
             _worldRepository = worldRepository;
+            _chunkRepository = chunkRepository;
         }
 
         public async Task createWorld(Guid id, string titleWorld)
         {
+            var cells = await _chunkHelper.GetStandardChunkGrid(titleWorld);
+            var chunk = new Chunk { Id = new Guid(), Cells = cells, Name ="Start Chunk"+" "+ titleWorld};
+            await _chunkRepository.Create(chunk);
+            //TOOD saveChunk.
             var world = new World
             {
                 Id = id,
                 Title = titleWorld,
-                Cells = new List<List<Cell>>()
-                { new List<Cell>()
+                Grid = new List<List<Guid>>()
+                { new List<Guid>()
                     {
-                        new Cell
-                        {
-                            CellName = "Je Eerste Cell! [1,1]",
-                            Color = "#55ff55",
-                            InnerCells = null,
-                            AttachedPages = new List<Page>(),
-                            Id = new Guid()
-                        }
+                        chunk.Id
                     }
                 } //[1,1] initialize
             };
-            await _worldRepository.InitiliazeWorld(world);
+            await _worldRepository.CreateWorld(world);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace CellService.Controllers
         {
             try
             {
-                return Ok(await _worldViewService.GetWorldWithMiddleCells(id));
+                return Ok(await _worldViewService.GetWorldWithMiddleChunk(id));
             }
             catch(Exception ex)
             {

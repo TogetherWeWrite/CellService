@@ -8,6 +8,6 @@ namespace CellService.Entities
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public List<List<Cell>> Cells { get; set; }
+        public List<List<Guid>> Grid{ get; set; }
     }
 }

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace CellService.Entities
 {
-    public class Cell
+    public class Chunk
     {
         [BsonId]
         public Guid Id { get; set; }
-        public string CellName { get; set; }
-        public string Color { get; set; } // Color in hex (#00abff)
-        public List<Page> AttachedPages { get; set; }
+        public string Name { get; set; }
+        public List<List<Cell>> Cells { get; set; }
     }
 }

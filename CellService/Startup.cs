@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CellService.Helpers;
 using CellService.MessageHandlers;
 using CellService.Repositories;
 using CellService.Services;
@@ -46,7 +47,9 @@ namespace CellService
             services.AddSingleton<ICellServiceDataStoreSettings>(sp =>
                 sp.GetRequiredService<IOptions<CellServiceDatastoreSettings>>().Value);
             #endregion
-
+            #region Helper Injection
+            services.AddTransient<IChunkHelper, ChunkHelper>();
+            #endregion
             #region Services injection
             services.AddTransient<IWorldEditService, WorldEditService>();
             services.AddTransient<IWorldViewService, WorldViewService>();
@@ -54,7 +57,7 @@ namespace CellService
 
             #region Repositories Injection
             services.AddTransient<IWorldRepository, Worldrepository>();
-            services.AddTransient<ICellRepository, CellRepository>();
+            services.AddTransient<IChunkRepository, ChunkRepository>();
             #endregion
             services.AddControllers();
 
