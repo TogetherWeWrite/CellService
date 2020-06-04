@@ -32,6 +32,7 @@ namespace CellService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             #region mq
             services.Configure<MessageQueueSettings>(Configuration.GetSection("MessageQueueSettings"));
             services.AddMessagePublisher(Configuration["MessageQueueSettings:Uri"]);
@@ -72,9 +73,14 @@ namespace CellService
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(x => x
+                           .AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader());
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

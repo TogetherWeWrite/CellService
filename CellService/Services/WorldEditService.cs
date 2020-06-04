@@ -23,18 +23,16 @@ namespace CellService.Services
         public async Task createWorld(Guid id, string titleWorld)
         {
             var cells = await _chunkHelper.GetStandardChunkGrid(titleWorld);
-            var chunk = new Chunk { Id = new Guid(), Cells = cells, Name ="Start Chunk"+" "+ titleWorld};
+            var chunk = new Chunk { Id = new Guid(), Cells = cells, Name ="Start Chunk"+" "+ titleWorld, AttachedPages = new List<Page>(), PosX=0,PosY=0};
             await _chunkRepository.Create(chunk);
             //TOOD saveChunk.
             var world = new World
             {
                 Id = id,
                 Title = titleWorld,
-                Grid = new List<List<Guid>>()
-                { new List<Guid>()
-                    {
-                        chunk.Id
-                    }
+                Grid = new List<Guid>()
+                { 
+                        chunk.Id  
                 } //[1,1] initialize
             };
             await _worldRepository.CreateWorld(world);

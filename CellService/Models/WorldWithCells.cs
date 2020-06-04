@@ -10,6 +10,6 @@ namespace CellService.Models
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public List<List<Chunk>> grid { get; set; }
+        public List<Chunk> grid { get; set; }
     }
 }

@@ -12,5 +12,9 @@ namespace CellService.Entities
         public Guid Id { get; set; }
         public string Name { get; set; }
         public List<List<Cell>> Cells { get; set; }
+        public List<Page> AttachedPages { get; set; }
+        public int PosX { get; set; }
+        public int PosY { get; set; }
+
     }
 }

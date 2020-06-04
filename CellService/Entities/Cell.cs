@@ -10,8 +10,6 @@ namespace CellService.Entities
     {
         [BsonId]
         public Guid Id { get; set; }
-        public string CellName { get; set; }
         public string Color { get; set; } // Color in hex (#00abff)
-        public List<Page> AttachedPages { get; set; }
     }
 }

@@ -21,21 +21,16 @@ namespace CellService.Services
         public async Task<WorldWithCells> GetWorldWithMiddleChunk(Guid id)
         {
             var world = await _worldRepository.GetWorldWithCells(id);
-            int meanHeightRounded = world.Grid.Count / 2;
-            int meanWidthRounded = world.Grid[meanHeightRounded].Count / 2;
-            var middleChunk = await _chunkRepository.Get(world.Grid[meanHeightRounded][meanWidthRounded]);
+            var middleChunk = await _chunkRepository.Get(world.Grid[0]);
             if(world == null)
             {
                 throw new WorldNotFoundException(id);
             }
             return new WorldWithCells
             {
-                grid = new List<List<Chunk>>()
+                grid = new List<Chunk>()
                 {
-                    new List<Chunk>()
-                    {
-                        middleChunk
-                    }
+                    middleChunk
                 },
                 Id = world.Id,
                 Title = world.Title
