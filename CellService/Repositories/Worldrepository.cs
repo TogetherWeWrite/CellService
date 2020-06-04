@@ -19,6 +19,10 @@ namespace CellService.Repositories
 
             _worlds = database.GetCollection<World>(settings.CollectionName);
         }
+        public async Task<World> Get(Guid id)
+        {
+            return await _worlds.Find(world => world.Id == id).FirstOrDefaultAsync();
+        }
 
         public async Task<bool> CreateWorld(World world)
         {
@@ -47,6 +51,12 @@ namespace CellService.Repositories
         public async Task<World> GetWorldWithCells(Guid id)
         {
             return await _worlds.Find(world => world.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<World> Update(Guid id, World updatedWorld)
+        {
+            await _worlds.ReplaceOneAsync(world => world.Id == id, updatedWorld);
+            return updatedWorld;
         }
     }
 }

@@ -54,6 +54,7 @@ namespace CellService
             #region Services injection
             services.AddTransient<IWorldEditService, WorldEditService>();
             services.AddTransient<IWorldViewService, WorldViewService>();
+            services.AddTransient<IChunkService, ChunkService>();
             #endregion
 
             #region Repositories Injection

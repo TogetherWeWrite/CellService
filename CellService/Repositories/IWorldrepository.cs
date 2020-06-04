@@ -8,6 +8,8 @@ namespace CellService.Repositories
 {
     public interface IWorldRepository //Repository used for editing world information. This will be called by the message queue.
     {
+        public Task<World> Get(Guid id);
+        public Task<World> Update(Guid id, World updatedWorld);
         public Task<bool> CreateWorld(World world); //Method used for initializing a new World, with cells 
         /// <summary>
         /// Method used for changed the world title in the database.
