@@ -28,12 +28,16 @@ namespace CellService.Repositories
         public async Task<Chunk> Get(Guid id)
         {
             return await _chunks.Find(chunk => chunk.Id == id).FirstOrDefaultAsync();
-
         }
 
         public async Task<Chunk> Get(string name)
         {
             return await _chunks.Find(chunk => chunk.Name == name).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Chunk>> Get(List<Guid> toGet)
+        {
+            return await _chunks.Find(chunk => toGet.Contains(chunk.Id)).ToListAsync();
         }
 
         public async Task Remove(Guid id)

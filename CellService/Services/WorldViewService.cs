@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CellService.Entities;
+using MongoDB.Bson.IO;
 
 namespace CellService.Services
 {
@@ -18,22 +19,44 @@ namespace CellService.Services
             this._chunkRepository = chunkRepository;
         }
 
-        public async Task<WorldWithCells> GetWorldWithMiddleChunk(Guid id)
+        public async Task<LoadPartOfWorld> GetPartOfWorld(List<Guid> RemainingChunks)
+        {
+            int toGetAmount = 40;
+            int remaininglenght = RemainingChunks.Count;
+            if(remaininglenght <= 40)
+            {
+                toGetAmount = remaininglenght;
+            }
+            List<Guid> toGet = RemainingChunks.GetRange(0, toGetAmount);
+            RemainingChunks.RemoveRange(0, toGetAmount);
+            var chunks = await _chunkRepository.Get(toGet);
+            bool doneloading = false;
+            if(RemainingChunks.Count == 0)
+            {
+                doneloading = true;
+            }
+            return new LoadPartOfWorld { Chunks = chunks, RemainingChunks = RemainingChunks, DoneLoading=doneloading };
+        }
+
+        public async Task<WorldInitialLoadModel> GetWorldWithMiddleChunk(Guid id)
         {
             var world = await _worldRepository.GetWorldWithCells(id);
+            var remainingChunks = world.Grid;
             var middleChunk = await _chunkRepository.Get(world.Grid[0]);
-            if(world == null)
+            remainingChunks.RemoveAt(0);
+            if (world == null)
             {
                 throw new WorldNotFoundException(id);
             }
-            return new WorldWithCells
+            return new WorldInitialLoadModel
             {
-                grid = new List<Chunk>()
+                Grid = new List<Chunk>()
                 {
                     middleChunk
                 },
                 Id = world.Id,
-                Title = world.Title
+                Title = world.Title,
+                RemainingChunks = remainingChunks
             };
         }
     }

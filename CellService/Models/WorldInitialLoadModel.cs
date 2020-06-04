@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace CellService.Models
 {
-    public class WorldWithCells
+    public class WorldInitialLoadModel
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public List<Chunk> grid { get; set; }
+        public List<Chunk> Grid { get; set; }
+        public List<Guid> RemainingChunks { get; set; }
     }
 }

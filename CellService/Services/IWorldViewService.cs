@@ -13,8 +13,9 @@ namespace CellService.Services
         /// Returns the world with cells
         /// </summary>
         /// <param name="id">The id of the world</param>
-        /// <returns><see cref="WorldWithCells"/>Which contains the world with the middle cells</returns>
+        /// <returns><see cref="WorldInitialLoadModel"/>Which contains the world with the middle cells</returns>
         /// <exception cref="WorldNotFoundException">When the world is not found</exception>
-        Task<WorldWithCells> GetWorldWithMiddleChunk(Guid id);
+        Task<WorldInitialLoadModel> GetWorldWithMiddleChunk(Guid id);
+        Task<LoadPartOfWorld> GetPartOfWorld(List<Guid> RemainingChunks);
     }
 }
