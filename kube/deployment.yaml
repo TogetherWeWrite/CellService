@@ -18,6 +18,6 @@ spec:
       containers:
         - image: bstijnb/cell-service
           imagePullPolicy: IfNotPresent
-          name: wereld-service
+          name: cell-service
           ports: 
             - containerPort: 80
