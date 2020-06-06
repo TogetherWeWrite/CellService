@@ -32,5 +32,18 @@ namespace CellService.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Route("chunks")]
+        [HttpPost]
+        public async Task<IActionResult> GetRemainingChunks([FromBody] List<Guid> RemainingChunks)
+        {
+            try
+            {
+                return Ok(await _worldViewService.GetPartOfWorld(RemainingChunks));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

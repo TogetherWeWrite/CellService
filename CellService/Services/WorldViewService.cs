@@ -43,7 +43,7 @@ namespace CellService.Services
             var world = await _worldRepository.GetWorldWithCells(id);
             var remainingChunks = world.Grid;
             var middleChunk = await _chunkRepository.Get(world.Grid[0]);
-            remainingChunks.RemoveAt(0);
+            remainingChunks.RemoveRange(0, 1);
             if (world == null)
             {
                 throw new WorldNotFoundException(id);

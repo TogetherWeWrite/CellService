@@ -21,7 +21,7 @@ namespace CellService.Services
             _worldRepository = worldRepository;
         }
 
-        public async Task<Chunk> CreateNewChunk(Guid worldId, CreateNewChunkModel model)
+        public async Task<Chunk> CreateNewChunk(CreateNewChunkModel model)
         {
             var chunk = new Chunk() {
                 Cells = await _chunkHelper.GetStandardChunkGrid(model.Name),
@@ -31,7 +31,7 @@ namespace CellService.Services
                 PosX = model.PosX,
                 PosY = model.PosY
             };
-            var world = await _worldRepository.Get(worldId);
+            var world = await _worldRepository.Get(model.WorldId);
             world.Grid.Add(chunk.Id);
             await _worldRepository.Update(world.Id, world);
             var createdChunk=  await _chunkRepository.Create(chunk);
