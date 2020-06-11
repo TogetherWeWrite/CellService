@@ -20,7 +20,7 @@ namespace CellService.Controllers
             _chunkService = chunkService;
         }
         [HttpPost]
-        public async Task<ActionResult> CreateNewChunk(CreateNewChunkModel model)
+        public async Task<IActionResult> CreateNewChunk(CreateNewChunkModel model)
         {
             try
             {
