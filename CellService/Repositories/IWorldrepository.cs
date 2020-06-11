@@ -20,7 +20,11 @@ namespace CellService.Repositories
         /// <exception cref="WorldNotFoundException"></exception>
         public Task<bool> EditWorldTitle(Guid id, string newTitle);//Method used only for editing the title.
         public Task<bool> DeleteWorld(Guid id);
-
+        /// <summary>
+        /// Gets the world with all the guids of chunks
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Task<World> GetWorldWithCells(Guid id);
     }
 
