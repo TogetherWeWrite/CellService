@@ -45,6 +45,12 @@ namespace CellService.Repositories
             await _chunks.DeleteOneAsync(chunk => chunk.Id == id);
         }
 
+        public async Task<Chunk> Update(Guid id, Chunk updatedChunk)
+        {
+            await _chunks.ReplaceOneAsync(chunk => chunk.Id == id, updatedChunk);
+            return updatedChunk;
+        }
+
         public async Task UpdateCell(Guid chunkId, Guid cellId, Cell newCell)
         {
             var curchunk = await Get(chunkId);

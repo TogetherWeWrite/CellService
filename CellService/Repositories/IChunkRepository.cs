@@ -15,6 +15,7 @@ namespace CellService.Repositories
         /// <returns>List of worlds which contain the searchWord.</returns>
         Task<Chunk> Get(Guid id);
         Task<Chunk> Get(string Title);
+        Task<Chunk> Update(Guid id, Chunk newChunk);
         Task<Chunk> Create(Chunk world);
         Task<List<Chunk>> Get(List<Guid> toGet);
         Task UpdateChunkTitle(Guid id, string newTitle);
