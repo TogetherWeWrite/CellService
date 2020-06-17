@@ -41,6 +41,10 @@ namespace CellService.Services
         public async Task<WorldInitialLoadModel> GetWorldWithMiddleChunk(Guid id)
         {
             var world = await _worldRepository.GetWorldWithCells(id);
+            if(world == null)
+            {
+                throw new WorldNotFoundException(id);
+            }
             var remainingChunks = world.Grid;
             var middleChunk = await _chunkRepository.Get(world.Grid[0]);
             remainingChunks.RemoveRange(0, 1);

@@ -14,9 +14,10 @@ namespace CellService.Services
         /// Updates the color of one cell
         /// </summary>
         /// <param name="model">Contains the world id of which the cell and the chunk should take part</param>
+        /// <param name="jwt">Contains the jwt token which contains which person is trying to edit the color</param>
         /// <returns></returns>
         /// <exception cref="CellDoesNotExistInThisWorldException"></exception>
         /// <exception cref="WorldDoesNotContainThisChunkException"></exception>
-        public Task<Chunk> UpdateColor(UpdateCellColorModel model);
+        public Task<Chunk> UpdateColor(UpdateCellColorModel model, string jwt);
     }
 }

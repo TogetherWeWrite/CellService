@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using CellService.Helpers;
 using CellService.MessageHandlers;
@@ -8,6 +9,7 @@ using CellService.Repositories;
 using CellService.Services;
 using CellService.Settings;
 using MessageBroker;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CellService
 {
@@ -33,6 +36,33 @@ namespace CellService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            #region jwt
+            // configure strongly typed settings objects
+            var appSettingsSection = Configuration.GetSection("JwtSettings");
+            services.Configure<JwtSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<JwtSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                };
+            });
+            #endregion
             #region mq
             services.Configure<MessageQueueSettings>(Configuration.GetSection("MessageQueueSettings"));
             services.AddMessagePublisher(Configuration["MessageQueueSettings:Uri"]);
@@ -49,6 +79,7 @@ namespace CellService
                 sp.GetRequiredService<IOptions<CellServiceDatastoreSettings>>().Value);
             #endregion
             #region Helper Injection
+            services.AddTransient<IAuthenticationHelper, AuthenticationHelper>();
             services.AddTransient<IChunkHelper, ChunkHelper>();
             #endregion
             #region Services injection

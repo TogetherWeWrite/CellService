@@ -1,5 +1,6 @@
 ﻿using CellService.Entities;
 using CellService.Exceptions;
+using CellService.Helpers;
 using CellService.Models;
 using CellService.Repositories;
 using System;
@@ -13,14 +14,17 @@ namespace CellService.Services
     {
         private readonly IChunkRepository _chunkRepository;
         private readonly IWorldRepository _worldRepository;
-        public CellEditService(IChunkRepository chunkRepository, IWorldRepository worldRepository)
+        private readonly IAuthenticationHelper _authenticationHelper;
+        public CellEditService(IChunkRepository chunkRepository, IWorldRepository worldRepository, IAuthenticationHelper authenticationHelper)
         {
             _chunkRepository = chunkRepository;
             _worldRepository = worldRepository;
+            _authenticationHelper = authenticationHelper;
         }
-        public async Task<Chunk> UpdateColor(UpdateCellColorModel model)
+        public async Task<Chunk> UpdateColor(UpdateCellColorModel model, string jwt)
         {
             var world = await _worldRepository.GetWorldWithCells(model.WorldId);
+            //TODO rights of this worlds.
             if (world.Grid.Contains(model.ChunkId))
             {
                 var chunk = await _chunkRepository.Get(model.ChunkId);

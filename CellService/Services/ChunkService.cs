@@ -14,15 +14,18 @@ namespace CellService.Services
         private readonly IChunkRepository _chunkRepository;
         private readonly IWorldRepository _worldRepository;
         private readonly IChunkHelper _chunkHelper;
-        public ChunkService(IChunkRepository chunkRepository, IChunkHelper chunkhelper,IWorldRepository worldRepository)
+        private readonly IAuthenticationHelper _authenticationHelper;
+        public ChunkService(IChunkRepository chunkRepository, IChunkHelper chunkhelper,IWorldRepository worldRepository, IAuthenticationHelper authenticationHelper)
         {
             _chunkRepository = chunkRepository;
             _chunkHelper = chunkhelper;
             _worldRepository = worldRepository;
+            _authenticationHelper = authenticationHelper;
         }
 
-        public async Task<Chunk> CreateNewChunk(CreateNewChunkModel model)
+        public async Task<Chunk> CreateNewChunk(CreateNewChunkModel model, string jwt)
         {
+            //todo authorization
             var chunk = new Chunk() {
                 Cells = await _chunkHelper.GetStandardChunkGrid(model.Name),
                 Id = Guid.NewGuid(),
