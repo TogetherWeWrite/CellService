@@ -79,5 +79,10 @@ namespace CellService.Repositories
             newchunk.Name = newName;
             await _chunks.ReplaceOneAsync(chunk => chunk.Id == id, newchunk);
         }
+
+        public async Task RemoveRange(List<Guid> ids)
+        {
+            await _chunks.DeleteManyAsync(chunk => ids.Contains(chunk.Id));
+        }
     }
 }

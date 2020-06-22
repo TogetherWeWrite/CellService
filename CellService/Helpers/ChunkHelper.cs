@@ -17,23 +17,23 @@ namespace CellService.Helpers
                     new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     }
                 },
                 new List<Cell>()
@@ -41,23 +41,23 @@ namespace CellService.Helpers
                     new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     }
                 },
                 new List<Cell>()
@@ -65,23 +65,23 @@ namespace CellService.Helpers
                     new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     }
                 },
                 new List<Cell>()
@@ -89,23 +89,23 @@ namespace CellService.Helpers
                     new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     }
                 },
                 new List<Cell>()
@@ -113,23 +113,23 @@ namespace CellService.Helpers
                     new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     },new Cell
                     {
                         Id = Guid.NewGuid(),
-                        Color = "#000000"
+                        Color = "#ffffff"
                     }
                 },
             };

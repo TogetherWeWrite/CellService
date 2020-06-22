@@ -37,5 +37,12 @@ namespace CellService.Services
             };
             await _worldRepository.CreateWorld(world);
         }
+
+        public async Task DeleteWorld(Guid id)
+        {
+            var world = await _worldRepository.Get(id);
+            await _chunkRepository.RemoveRange(world.Grid);
+            await _worldRepository.DeleteWorld(id);
+        }
     }
 }

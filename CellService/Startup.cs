@@ -63,12 +63,13 @@ namespace CellService
                 };
             });
             #endregion
+            
             #region mq
             services.Configure<MessageQueueSettings>(Configuration.GetSection("MessageQueueSettings"));
             services.AddMessagePublisher(Configuration["MessageQueueSettings:Uri"]);
             services.AddMessageConsumer(Configuration["MessageQueueSettings:Uri"],
                 "cell-service",
-                builder => builder.WithHandler<WorldMessageHandler>("new-world"));
+                builder => builder.WithHandler<WorldMessageHandler>("new-world").WithHandler<WorldDeleteMessageHandler>("delete-world"));
             #endregion
 
             #region database injection 
@@ -78,10 +79,12 @@ namespace CellService
             services.AddSingleton<ICellServiceDataStoreSettings>(sp =>
                 sp.GetRequiredService<IOptions<CellServiceDatastoreSettings>>().Value);
             #endregion
+            
             #region Helper Injection
             services.AddTransient<IAuthenticationHelper, AuthenticationHelper>();
             services.AddTransient<IChunkHelper, ChunkHelper>();
             #endregion
+            
             #region Services injection
             services.AddTransient<IWorldEditService, WorldEditService>();
             services.AddTransient<IWorldViewService, WorldViewService>();
@@ -93,6 +96,7 @@ namespace CellService
             services.AddTransient<IWorldRepository, Worldrepository>();
             services.AddTransient<IChunkRepository, ChunkRepository>();
             #endregion
+            
             services.AddControllers();
 
         }
