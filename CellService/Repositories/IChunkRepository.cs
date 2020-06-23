@@ -21,5 +21,6 @@ namespace CellService.Repositories
         Task UpdateChunkTitle(Guid id, string newTitle);
         Task UpdateCell(Guid chunkId, Guid cellId, Cell newCell);
         Task Remove(Guid id);
+        Task RemoveRange(List<Guid> ids);
     }
 }

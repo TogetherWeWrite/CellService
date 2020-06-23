@@ -9,6 +9,6 @@ namespace CellService.Services
 {
     public interface IChunkService
     {
-        Task<Chunk> CreateNewChunk(CreateNewChunkModel model);
+        Task<Chunk> CreateNewChunk(CreateNewChunkModel model, string jwt);
     }
 }

@@ -21,11 +21,12 @@ namespace CellService.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody]UpdateCellColorModel model)
+        [Authorize]
+        public async Task<IActionResult> Put([FromBody]UpdateCellColorModel model, [FromHeader(Name ="Authorization")]string jwt)
         {
             try
             {
-                return Ok(await _cellEditService.UpdateColor(model));
+                return Ok(await _cellEditService.UpdateColor(model, jwt));
             }
             catch(Exception ex)
             {
