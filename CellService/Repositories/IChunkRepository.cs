@@ -19,7 +19,6 @@ namespace CellService.Repositories
         Task<Chunk> Create(Chunk world);
         Task<List<Chunk>> Get(List<Guid> toGet);
         Task UpdateChunkTitle(Guid id, string newTitle);
-        Task UpdateCell(Guid chunkId, Guid cellId, Cell newCell);
         Task Remove(Guid id);
         Task RemoveRange(List<Guid> ids);
     }
