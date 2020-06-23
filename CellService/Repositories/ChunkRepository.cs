@@ -51,27 +51,6 @@ namespace CellService.Repositories
             return updatedChunk;
         }
 
-        public async Task UpdateCell(Guid chunkId, Guid cellId, Cell newCell)
-        {
-            var curchunk = await Get(chunkId);
-            int indexlist = 0;
-            int indexInList = 0;
-            foreach (var list in curchunk.Cells)
-            {
-                foreach (var cell in list)
-                {
-                    indexInList = 0;
-                    if (cell.Id == cellId)
-                    {
-                        return;//Get out list
-                    }
-                    indexInList++;
-                }
-                indexlist++;
-            }
-            curchunk.Cells[indexlist][indexInList] = newCell;
-            await _chunks.ReplaceOneAsync(chunk => chunk.Id == chunkId, curchunk);
-        }
 
         public async Task UpdateChunkTitle(Guid id, string newName)
         {

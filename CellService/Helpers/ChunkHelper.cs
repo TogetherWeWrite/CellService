@@ -16,7 +16,7 @@ namespace CellService.Helpers
                 cells.Add(new List<Cell>());
                 for(int j =0; j<16; j++)
                 {
-                    cells[i].Add(new Cell() { Color = "#ffffff", Id = Guid.NewGuid() });
+                    cells[i].Add(new Cell() { Color = "#ffffff"});
                 }
             }
             return cells;
