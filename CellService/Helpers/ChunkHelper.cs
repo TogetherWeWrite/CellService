@@ -10,129 +10,16 @@ namespace CellService.Helpers
     {
         public async Task<List<List<Cell>>> GetStandardChunkGrid(string name)
         {
-            return new List<List<Cell>>()
+            var cells = new List<List<Cell>>();
+            for(int i = 0; i<16; i++)
             {
-                new List<Cell>()
+                cells.Add(new List<Cell>());
+                for(int j =0; j<16; j++)
                 {
-                    new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    }
-                },
-                new List<Cell>()
-                {
-                    new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    }
-                },
-                new List<Cell>()
-                {
-                    new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    }
-                },
-                new List<Cell>()
-                {
-                    new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    }
-                },
-                new List<Cell>()
-                {
-                    new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    },new Cell
-                    {
-                        Id = Guid.NewGuid(),
-                        Color = "#ffffff"
-                    }
-                },
-            };
+                    cells[i].Add(new Cell() { Color = "#ffffff", Id = Guid.NewGuid() });
+                }
+            }
+            return cells;
         }
     }
 }
