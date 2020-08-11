@@ -11,5 +11,7 @@ namespace CellService.Models
         public Guid WorldId { get; set; }
         public Guid ChunkId { get; set; }
         public string Color { get; set; }
+        public int PosX { get; set; }
+        public int PosY { get; set; }
     }
 }

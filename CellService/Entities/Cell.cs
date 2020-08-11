@@ -8,8 +8,6 @@ namespace CellService.Entities
 {
     public class Cell
     {
-        [BsonId]
-        public Guid Id { get; set; }
         public string Color { get; set; } // Color in hex (#00abff)
     }
 }
